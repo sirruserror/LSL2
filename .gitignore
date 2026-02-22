@@ -1,0 +1,8 @@
+out/
+build/
+roots/
+.vscode/
+*.swp
+*.tmp
+lsl2
+*.o
