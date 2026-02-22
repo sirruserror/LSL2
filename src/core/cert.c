@@ -13,10 +13,10 @@ int cert_rootfs(const char *path){
     int procfound = 0;
     int srvfound = 0;
     int libfound = 0;
-    int lib64found = 0;
     d = opendir(path);
     if (d) {
         while ((dir = readdir(d)) != NULL){
+            printf("%s\n", dir->d_name);
             if (strcmp(dir->d_name, "etc") == 0){
                 etcfound = 1;
             }
@@ -47,12 +47,9 @@ int cert_rootfs(const char *path){
             else if (strcmp(dir->d_name, "lib") == 0){
                 libfound = 1;
             }
-            else if (strcmp(dir->d_name, "lib64") == 0){
-                lib64found = 1;
-            }
         }
         closedir(d);
-        if(etcfound == 1 && rootfound == 1 && devfound == 1 && binfound == 1 && sbinfound == 1 && tmpfound == 1 && sysfound == 1 && procfound == 1 && srvfound == 1 && libfound == 1 && lib64found == 1){
+        if(etcfound == 1 && rootfound == 1 && devfound == 1 && binfound == 1 && sbinfound == 1 && tmpfound == 1 && sysfound == 1 && procfound == 1 && srvfound == 1 && libfound == 1){
             return 0;
         }
         else{

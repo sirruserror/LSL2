@@ -6,3 +6,4 @@ roots/
 *.tmp
 lsl2
 *.o
+run/
