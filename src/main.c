@@ -1,6 +1,6 @@
 #include "core/cert.h"
 
 int main(){
-    printf("%d", cert_rootfs("/home/sirrus"));
+    printf("return: %d \n", cert_rootfs("/"));
     return 0;
 }

@@ -52,7 +52,7 @@ int cert_rootfs(const char *path){
             }
         }
         closedir(d);
-        if(etcfound != 1 && rootfound != 1 && devfound != 1 && binfound != 1 && sbinfound != 1 && tmpfound != 1 && sysfound != 1 && procfound != 1 && srvfound != 1 && libfound != 1 && lib64found != 1){
+        if(etcfound == 1 && rootfound == 1 && devfound == 1 && binfound == 1 && sbinfound == 1 && tmpfound == 1 && sysfound == 1 && procfound == 1 && srvfound == 1 && libfound == 1 && lib64found == 1){
             return 0;
         }
         else{
@@ -62,4 +62,5 @@ int cert_rootfs(const char *path){
     else{
         fprintf(stderr, "Cannot open rootfs '%s'", path);
     }
+    return 0;
 }
