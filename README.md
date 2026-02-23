@@ -1,6 +1,6 @@
 # **LSL2**
 
-## Linux subsystem for Linux version 2
+## Linux subsystem for Linux version 2 (WIP)
 
 LSL2 is a Linux subsystem for Linux, which allows you to run containerized instances of other Linux distributions (through custom tar containerization and chroot) on top of your existing Linux system. It provides a lightweight and efficient way to run multiple Linux environments simultaneously without the need for full virtualization.
 
