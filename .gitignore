@@ -10,3 +10,4 @@ run/
 *.gz
 *.tar
 test_rootfs.gz
+test/
