@@ -15,7 +15,7 @@ It builds on from the existing LSL1 which relied on Docker and had certain limit
 
 
 ## ATTRIBUTION
-This project is inspired by the work of Microsoft on WSL2, and we have taken inspiration from their design and implementation to create a similar experience for Linux users. We would like to acknowledge the efforts of the Microsoft team in developing WSL2, which has paved the way for projects like LSL2 to exist.
+This project is inspired by the work of Microsoft on WSL2
 
 ## LICENSE
 LSL2 is licensed under the BSD 3-Clause License, which allows for free use, modification, and distribution of the software. You can find the full text of the license in the LICENSE file included in this repository.
