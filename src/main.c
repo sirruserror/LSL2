@@ -1,4 +1,6 @@
 #include "core/cert.h"
+#include "core/chroot.h"
+#include <stdlib.h>
 
 int main(int argc, char **argv){
     int debug = 0;
@@ -16,12 +18,34 @@ int main(int argc, char **argv){
 
         if (rootfs == NULL) {
             fprintf(stderr, "No rootfs path provided\n");
-        } else if (debug == 1) {
-            printf("CERT_ROOTFS return: %d \n", cert_rootfs(rootfs));
-            printf("CERT_SH return: %d \n", cert_sh(rootfs));
+            return 1;
         }
+        int certf = cert_rootfs(rootfs);
+        int certs = cert_sh(rootfs);
+        int certm = cert_mounts(rootfs);
+        if(certf != 0){
+            fprintf(stderr, "Unable to certify rootfs!\n");
+            return 1;
+        }
+        if(certs != 0){
+            fprintf(stderr, "Unable to certify /bin/sh in rootfs!\n");
+            return 1;
+        }
+        if(certm != 0){
+            fprintf(stderr, "Unable to certify mounting!\n");
+            return 1;
+        }
+        if (debug == 1) {
+            printf("CERT_ROOTFS return: %d \n", certf);
+            printf("CERT_SH return: %d \n", certs);
+            printf("CERT_MOUNTS return: %d \n", certm);
+        }
+
+
+        return chroot_and_shell(rootfs);
     } else {
-        fprintf(stderr, "Not enough arguments passed\n");
+        fprintf(stderr, "Usage: %s [-d] <rootfs>\n", argv[0]);
+        return 1;
     }
     return 0;
 }

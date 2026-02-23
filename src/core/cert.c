@@ -84,3 +84,27 @@ int cert_sh(const char *rootfs){
     }
     return 1;
 }
+
+int cert_mounts(const char *rootfs){
+    char buf[128];
+    sprintf(buf, "mount --bind /proc %s/proc > /dev/null", rootfs);
+    int procm = system(buf);
+    sprintf(buf, "mount --bind /dev %s/dev > /dev/null", rootfs);
+    int devm = system(buf);
+    sprintf(buf, "mount --bind /sys %s/sys > /dev/null", rootfs);
+    int sysm = system(buf);
+    if(procm != 0){
+        fprintf(stderr, "Cannot mount /proc!\n");
+        return 1;
+    }
+    else if(devm != 0){
+        fprintf(stderr, "Cannot mount /dev!\n");
+        return 1;
+    }
+    else if(sysm != 0){
+        fprintf(stderr, "Cannot mount /sys!\n");
+        return 1;
+    }
+    return 0;
+
+}

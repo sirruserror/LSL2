@@ -13,6 +13,22 @@ It builds on from the existing LSL1 which relied on Docker and had certain limit
 - **Compatibility**: LSL2 is compatible with a wide range of Linux distributions, allowing you to choose the one that best suits your needs.
 - **Accessibility to any rootfs to run**: LSL2 allows you to use any root filesystem (rootfs) to create a new Linux environment, giving you the flexibility to run different distributions or custom setups.
 
+### Interactive Chroot Shell
+
+Run the tool with the path to a prepared rootfs and (when necessary) `sudo` to drop
+into an interactive `/bin/sh` inside that root environment:
+
+```sh
+sudo ./lsl2 [-d] /path/to/rootfs
+```
+
+The `-d`/`--debug` flag will print certification results before entering the chroot.
+
+The binary will perform some basic sanity checks (`cert_rootfs`, `cert_sh`) and
+bind-mount `/proc`, `/dev` and `/sys` before invoking `chroot(2)` and executing
+`/bin/sh` inside the new root.
+
+
 
 ## ATTRIBUTION
 This project is inspired by the work of Microsoft on WSL2
