@@ -7,3 +7,6 @@ roots/
 lsl2
 *.o
 run/
+*.gz
+*.tar
+test_rootfs.gz
