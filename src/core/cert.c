@@ -16,7 +16,6 @@ int cert_rootfs(const char *path){
     d = opendir(path);
     if (d) {
         while ((dir = readdir(d)) != NULL){
-            printf("%s\n", dir->d_name);
             if (strcmp(dir->d_name, "etc") == 0){
                 etcfound = 1;
             }
@@ -60,4 +59,28 @@ int cert_rootfs(const char *path){
         fprintf(stderr, "Cannot open rootfs '%s'", path);
     }
     return 0;
+}
+
+int cert_sh(const char *rootfs){
+    DIR *d;
+    struct dirent *dir;
+    char buf[128];
+    sprintf(buf, "%s/bin", rootfs);
+    d = opendir(buf);
+    int shfound = 0;
+    if(d){
+        while ((dir = readdir(d)) != NULL){
+            if(strcmp(dir->d_name, "sh") == 0){
+                shfound = 1;
+            }
+        }
+        if(shfound == 1){
+            return 0;
+        }
+        return 1;
+    }
+    else{
+        fprintf(stderr, "Cannot open rootfs /bin '%s'\n", buf);
+    }
+    return 1;
 }
