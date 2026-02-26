@@ -1,4 +1,4 @@
-# Makefile for LSL2 project
+# Makefile for mntnerd project
 
 # Compiler and flags
 CC := gcc
@@ -17,7 +17,7 @@ OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 OBJ_DIRS := $(sort $(dir $(OBJS)))
 
 # Target executable
-TARGET := lsl2
+TARGET := mntnerd
 
 .PHONY: all clean directories
 
@@ -40,3 +40,8 @@ directories:
 
 clean:
 	rm -rf $(BUILD_DIR) $(TARGET)
+
+install: all
+	@echo "Installing $(TARGET) to /usr/local/bin"
+	@cp $(TARGET) /usr/local/bin/$(TARGET)
+	@echo "Installation complete."

@@ -7,7 +7,7 @@
 
 int main(int argc, char **argv){
     if(geteuid() != 0){
-        fprintf(stderr, "ERROR! LSL2 needs to be ran as root\n");
+        fprintf(stderr, "ERROR! mntnerd needs to be ran as root\n");
         return 1;
     }
     int debug = 0;
@@ -43,15 +43,15 @@ int main(int argc, char **argv){
     if(rootfs != NULL && tar == 1){
         char buf[128];
         if(debug == 1){
-            printf("Making runtime dir to extract tarred rootfs\n");
+            printf("Making runtime dir in tmpfs to extract tarred rootfs\n");
         }
-        system("mkdir run > /dev/null");
-        sprintf(buf, "tar -xf %s -C run/", rootfs);
+        system("mkdir /tmp/run > /dev/null");
+        sprintf(buf, "tar -xf %s -C /tmp/run/", rootfs);
         system(buf);
         if(debug == 1){
             printf("Untarred rootfs\n");
         }
-        rootfs = "run";
+        rootfs = "/tmp/run";
         if(debug == 1){
             printf("Changed rootfs focus to runtime dir\n");
         }
@@ -99,7 +99,9 @@ int main(int argc, char **argv){
     exit_code = chroot_and_shell(rootfs);
 
 cleanup:
-
+    if (tar == 1) {
+        system("rm -rf /tmp/run > /dev/null");
+    }
     if (mounted_dev)
         umount2(dev_path, MNT_DETACH);
 

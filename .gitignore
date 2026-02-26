@@ -4,7 +4,7 @@ roots/
 .vscode/
 *.swp
 *.tmp
-lsl2
+mntnerd
 *.o
 run/
 *.gz
