@@ -10,4 +10,5 @@ run/
 *.gz
 *.tar
 test_rootfs.gz
+arch.tar.zst
 test/

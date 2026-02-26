@@ -6,7 +6,12 @@
 #include <unistd.h>
 
 int main(int argc, char **argv){
+    if(geteuid() != 0){
+        fprintf(stderr, "ERROR! LSL2 needs to be ran as root\n");
+        return 1;
+    }
     int debug = 0;
+    int tar = 0;
     const char *rootfs = NULL;
     int exit_code = 1;
 
@@ -19,15 +24,36 @@ int main(int argc, char **argv){
     int mounted_dev  = 0;
 
     if (argc <= 1) {
-        fprintf(stderr, "Usage: %s [-d] <rootfs>\n", argv[0]);
+        fprintf(stderr, "Usage: %s [-d --debug] [-t --tar] <rootfs/.tar/.tar.gz/.tar.zst/.gz>\n", argv[0]);
         return 1;
     }
 
     for (int i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-d") || !strcmp(argv[i], "--debug")) {
             debug = 1;
-        } else if (argv[i][0] != '-' && rootfs == NULL) {
+        }
+        else if(!strcmp(argv[i], "-t") || !strcmp(argv[i], "--tar")){
+            tar = 1;
+        } 
+        else if (argv[i][0] != '-' && rootfs == NULL) {
             rootfs = argv[i];
+        }
+    }
+
+    if(rootfs != NULL && tar == 1){
+        char buf[128];
+        if(debug == 1){
+            printf("Making runtime dir to extract tarred rootfs\n");
+        }
+        system("mkdir run > /dev/null");
+        sprintf(buf, "tar -xf %s -C run/", rootfs);
+        system(buf);
+        if(debug == 1){
+            printf("Untarred rootfs\n");
+        }
+        rootfs = "run";
+        if(debug == 1){
+            printf("Changed rootfs focus to runtime dir\n");
         }
     }
 
